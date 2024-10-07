@@ -19,13 +19,10 @@ function AddTodo()
 
         let span = document.createElement("span");
         span.innerHTML = "\u00d7";
-
-        span.addEventListener("click", function(){
-            li.remove();
-        })
         li.appendChild(span);
 
         inputEl.value = "";
+        saveData();
     }
 }
 
@@ -33,8 +30,29 @@ listConatainer.addEventListener("click", function(e){
     if(e.target.tagName === "LI")
     {
         e.target.classList.toggle("checked");
+        saveData();
     }
-})
+    else if(e.target.tagName === "SPAN")
+    {
+        e.target.parentElement.remove();
+        saveData();
+    }
+}, false)
+
+
+function saveData()
+{
+    localStorage.setItem("data", listConatainer.innerHTML);
+
+}
+
+
+function showTask()
+{
+    listConatainer.innerHTML = localStorage.getItem("data");
+}
+
+showTask();
 
 
 
